@@ -5,7 +5,7 @@ import com.example.storage.CSVManager
 
 fun main(args: Array<String>) {
     //val users = UserGenerator.generate(10)
-    //CSVManager.write(users)
-    val users = CSVManager.read()
+    //CSVManager.write(users, "users.csv")
+    val users = CSVManager.read("users.csv")
     println(users)
 }

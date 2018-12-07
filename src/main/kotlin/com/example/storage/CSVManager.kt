@@ -2,19 +2,24 @@ package com.example.storage
 
 import com.example.model.User
 import java.io.File
+import java.io.FileNotFoundException
 
 object CSVManager {
-    fun write(users: List<User>) {
-        File("users.csv").printWriter(Charsets.UTF_8).use { out ->
+    fun write(users: List<User>, file: String) {
+        File(file).printWriter(Charsets.UTF_8).use { out ->
             users.forEach { user ->
                 out.println(user.toCSVLine())
             }
         }
     }
 
-    fun read(): List<User> {
+    fun read(fileName: String): List<User> {
         val users = ArrayList<User>()
-        File("users.csv").readLines(Charsets.UTF_8).forEach {
+        val file = File(fileName)
+        if(!file.exists()) {
+            throw FileNotFoundException()
+        }
+        file.readLines(Charsets.UTF_8).forEach {
             line -> users.add(User.fromCSVLine(line))
         }
         return users

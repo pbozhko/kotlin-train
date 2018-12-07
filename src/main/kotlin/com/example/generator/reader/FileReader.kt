@@ -1,21 +1,17 @@
 package com.example.generator.reader
 
 import java.io.File
+import java.io.FileNotFoundException
 import java.util.*
 import kotlin.collections.ArrayList
 
 object FileReader {
-    fun readRandomFNames(count: Int): List<String> {
-        val file = File(ClassLoader.getSystemResource("fnames").file)
-        return this.readRandomNames(file, count)
-    }
+    fun readRandomNames(file: File, count: Int): List<String> {
 
-    fun readRandomLNames(count: Int): List<String> {
-        val file = File(ClassLoader.getSystemResource("lnames").file)
-        return this.readRandomNames(file, count)
-    }
+        if(!file.exists()) {
+            throw FileNotFoundException()
+        }
 
-    private fun readRandomNames(file: File, count: Int): List<String> {
         val names = ArrayList<String>()
         val allNames = file.readLines(Charsets.UTF_8)
 

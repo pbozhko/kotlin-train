@@ -3,22 +3,26 @@ package com.example.generator
 import com.example.generator.reader.FileReader
 import com.example.model.Role
 import com.example.model.User
+import java.io.File
 import java.time.LocalDateTime
 import java.util.*
 
 object UserGenerator {
 
-    val ids = ArrayList<Int>()
+    private val ids = ArrayList<Int>()
 
     fun generate(count: Int): List<User> {
 
         val users = ArrayList<User>()
 
-        val fNames = FileReader.readRandomFNames(count)
-        val lNames = FileReader.readRandomLNames(count)
+        val fNamesFile = File(ClassLoader.getSystemResource("fNames").file)
+        val lNamesFile = File(ClassLoader.getSystemResource("lNames").file)
+
+        val fNamesList = FileReader.readRandomNames(fNamesFile, count)
+        val lNamesList = FileReader.readRandomNames(lNamesFile, count)
 
         for (i in 0..(count - 1)) {
-            val user = User(this.getRandomId(count), fNames.get(i), lNames.get(i), this.getRandomDateOfBirth(), this.getRandomRole())
+            val user = User(this.getRandomId(count), fNamesList.get(i), lNamesList.get(i), this.getRandomDateOfBirth(), this.getRandomRole())
             users.add(user)
         }
 
